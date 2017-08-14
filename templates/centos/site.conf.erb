@@ -1,12 +1,18 @@
 DBDriver pgsql
-DBDParams "dbname=<%= node['application']['db']['name'] %> user=<%= node['application']['db']['name'] %> password=<%= node['application']['db']['password'] %>"
+DBDParams "dbname=<%= node['application']['db']['name'] %> user=<%= node['application']['db']['name'] %> password=<%= node['application']['db']['password'] %> host=<%= node['application']['db']['host'] %>"
 
-DBDMin 4
-DBDKeep 8
-DBDMax 20
+DBDMin 1
+DBDKeep 2
+DBDMax 4
 DBDExptime 60
 
 Alias /<%= node['application']['name'] %> <%= node['application']['dir'] %>
+
+<FilesMatch \.php$>
+    SetHandler application/x-httpd-php
+</FilesMatch>
+
+DirectoryIndex index.php index.html
 
 <Directory <%= node['application']['dir'] %>>
     AllowOverride All
@@ -14,6 +20,7 @@ Alias /<%= node['application']['name'] %> <%= node['application']['dir'] %>
     EnableSendfile Off
 </Directory>
 <Location /<%= node['application']['name'] %>>
+<% if node['application']['auth']['require'] %>
     AuthType Basic
     AuthName "<%= node['application']['auth']['name'] %>"
     AuthBasicProvider dbd
@@ -21,4 +28,7 @@ Alias /<%= node['application']['name'] %> <%= node['application']['dir'] %>
     AuthDBDUserPWQuery "SELECT <%= node['application']['auth']['db']['password_field'] %> FROM <%= node['application']['auth']['db']['table'] %> WHERE <%= node['application']['auth']['db']['id_field'] %> = %s"
 
     Require valid-user
+<% elsif %>
+    Require all granted
+<% end %>
 </Location>
