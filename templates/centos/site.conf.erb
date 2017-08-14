@@ -1,0 +1,24 @@
+DBDriver pgsql
+DBDParams "dbname=<%= node['application']['db']['name'] %> user=<%= node['application']['db']['name'] %> password=<%= node['application']['db']['password'] %>"
+
+DBDMin 4
+DBDKeep 8
+DBDMax 20
+DBDExptime 60
+
+Alias /<%= node['application']['name'] %> <%= node['application']['dir'] %>
+
+<Directory <%= node['application']['dir'] %>>
+    AllowOverride All
+    EnableMMAP Off
+    EnableSendfile Off
+</Directory>
+<Location /<%= node['application']['name'] %>>
+    AuthType Basic
+    AuthName "<%= node['application']['auth']['name'] %>"
+    AuthBasicProvider dbd
+
+    AuthDBDUserPWQuery "SELECT <%= node['application']['auth']['db']['password_field'] %> FROM <%= node['application']['auth']['db']['table'] %> WHERE <%= node['application']['auth']['db']['id_field'] %> = %s"
+
+    Require valid-user
+</Location>
