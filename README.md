@@ -1,13 +1,13 @@
 # application_deployer
 To deploy LL languages applications
 
-#Requirements
+## Requirements
 
-##Chef
+### Chef
 
 + Chef 12.1+
 
-#Attributes
+## Attributes
 
 The following attributes are required
 
@@ -22,12 +22,12 @@ default['application']['auth']['db']['id_field'] = 'userid field on table'
 default['application']['auth']['db']['id_field'] = 'passowrd field on table'
 ```
 
-#Recipes
+## Recipes
 * default
 * init_db
 * deploy
 
-#Usage Example
+## Usage Example
 
 ```ruby
       "application" => {
@@ -48,7 +48,7 @@ default['application']['auth']['db']['id_field'] = 'passowrd field on table'
       }
 ```
 
-#License & Authors
+## License & Authors
 
 **Author:** Wardish,LLC ([www.wardish.jp](http://www.wardish.jp))
 
