@@ -6,7 +6,7 @@ DBDKeep 2
 DBDMax 4
 DBDExptime 60
 
-Alias /<%= node['application']['name'] %> <%= node['application']['dir'] %>
+Alias /<%= node['application']['name'] %> <%= node['application']['dir'] %>/public
 
 <FilesMatch \.php$>
     SetHandler application/x-httpd-php
