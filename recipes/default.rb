@@ -11,17 +11,32 @@ httpd_service 'default' do
   action [:create, :start]
 end
 
-httpd_module 'dbd' do
-  module_name 'dbd'
+httpd_module 'php' do
+  package_name 'php'
+  module_name 'php-zts'
   action :create
 end
 
-httpd_module 'authn_dbd' do
-  module_name 'authn_dbd'
-  action :create
+%w(dbd authn_dbd rewrite).each do |httpd_module|
+  httpd_module httpd_module do
+    module_name httpd_module
+    action :create
+  end
 end
 
-httpd_module 'rewrite' do
-  module_name 'rewrite'
-  action :create
+script "Copy php.ini" do
+  user          "root"
+  interpreter   "bash"
+  code <<-"EOS"
+    cp /etc/php.ini /etc/php-zts.ini
+    sed 's/-zts//g' /etc/php-zts.ini > /etc/php.ini
+  EOS
+end
+
+script "Httpd use php-zts" do
+  user          "root"
+  interpreter   "bash"
+  code <<-"EOS"
+    echo "PHPIniDir /etc/php-zts.ini" >> /etc/httpd-default/conf.modules.d/php-zts.load
+  EOS
 end

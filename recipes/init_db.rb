@@ -1,3 +1,8 @@
+httpd_service 'default' do
+  listen_addresses ["*"]
+  action [:stop]
+end
+
 script "initialize database" do
   user        "postgres"
   interpreter "bash"
@@ -12,4 +17,9 @@ script "initialize database" do
     psql -c "CREATE EXTENSION pgcrypto" #{node['application']['db']['name']}
     psql -c "CREATE EXTENSION pg_trgm" #{node['application']['db']['name']}
   EOS
+end
+
+httpd_service 'default' do
+  listen_addresses ["*"]
+  action [:start]
 end
