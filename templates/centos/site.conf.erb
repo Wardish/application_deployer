@@ -6,7 +6,7 @@ DBDKeep 2
 DBDMax 4
 DBDExptime 60
 
-Alias /<%= node['application']['name'] %> <%= node['application']['dir']['public'] %>
+Alias /<%= node['application']['name'] %> <%= node['application']['public_dir'] %>
 
 <FilesMatch \.php$>
     SetHandler application/x-httpd-php
@@ -14,7 +14,7 @@ Alias /<%= node['application']['name'] %> <%= node['application']['dir']['public
 
 DirectoryIndex index.php index.html
 
-<Directory <%= node['application']['dir'] %>>
+<Directory <%= node['application']['base_dir'] %>>
     AllowOverride All
     EnableMMAP Off
     EnableSendfile Off
