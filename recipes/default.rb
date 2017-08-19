@@ -17,7 +17,7 @@ httpd_module 'php' do
   action :create
 end
 
-%w(dbd authn_dbd rewrite).each do |httpd_module|
+%w(dbd authn_dbd rewrite ldap).each do |httpd_module|
   httpd_module httpd_module do
     module_name httpd_module
     action :create
