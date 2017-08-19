@@ -6,18 +6,13 @@
 package "apr-util-pgsql"
 package "bash-completion"
 
-httpd_service 'default' do
-  listen_addresses ["*"]
-  action [:create, :start]
-end
-
 httpd_module 'php' do
   package_name 'php'
   module_name 'php-zts'
   action :create
 end
 
-%w(dbd authn_dbd rewrite ldap).each do |httpd_module|
+%w(dbd authn_dbd rewrite ldap authnz_ldap).each do |httpd_module|
   httpd_module httpd_module do
     module_name httpd_module
     action :create
@@ -31,6 +26,11 @@ script "Copy php.ini" do
     cp /etc/php.ini /etc/php-zts.ini
     sed 's/-zts//g' /etc/php-zts.ini > /etc/php.ini
   EOS
+end
+
+httpd_service 'default' do
+  listen_addresses ["*"]
+  action [:create, :start]
 end
 
 script "Httpd use php-zts" do
