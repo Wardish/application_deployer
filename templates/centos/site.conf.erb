@@ -1,3 +1,5 @@
+<% if node['application']['auth']['type'] == "db" %>
+
 DBDriver pgsql
 DBDParams "dbname=<%= node['application']['db']['name'] %> user=<%= node['application']['db']['name'] %> password=<%= node['application']['db']['password'] %> host=<%= node['application']['db']['host'] %>"
 
@@ -5,6 +7,7 @@ DBDMin 1
 DBDKeep 2
 DBDMax 4
 DBDExptime 60
+<% end %>
 
 Alias /<%= node['application']['name'] %> <%= node['application']['public_dir'] %>
 
@@ -20,7 +23,7 @@ DirectoryIndex index.php index.html
     EnableSendfile Off
 </Directory>
 <Location /<%= node['application']['name'] %>>
-<% if node['application']['auth']['require'] %>
+<% if node['application']['auth']['type'] == "db" %>
     AuthType Basic
     AuthName "<%= node['application']['auth']['name'] %>"
     AuthBasicProvider dbd
@@ -28,7 +31,14 @@ DirectoryIndex index.php index.html
     AuthDBDUserPWQuery "SELECT <%= node['application']['auth']['db']['password_field'] %> FROM <%= node['application']['auth']['db']['table'] %> WHERE <%= node['application']['auth']['db']['id_field'] %> = %s"
 
     Require valid-user
-<% elsif %>
+<% elsif node['application']['auth']['type'] == "ldap" %>
+    AuthType Basic
+    AuthName "Members Only"
+    AuthBasicProvider ldap
+    AuthLDAPURL "ldap://127.0.0.1/dc=wardish,dc=jp?cn"
+
+    Require valid-user
+<% else %>
     Require all granted
 <% end %>
 </Location>
