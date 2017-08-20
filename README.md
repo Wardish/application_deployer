@@ -9,23 +9,49 @@ To deploy LL languages applications
 
 ## Attributes
 
-The following attributes are required
+<dl>
+<dt >node['application']['db']['name'] &nbsp; <span style="color: red;">*required for init_db</span></dt>
+<dd>Database name.</dd>
+<dt>node['applictaion']['db']['password'] &nbsp; <span style="color: red;">*required for init_db</span></dt>
+<dd>Database user password</dd>
+<dt>node['application']['base_dir']</dt>
+<dd>CodeIgniter directory.</dd>
+<dt>node['application']['public_dir']</dt>
+<dd>DcoumentRoot of application.</dd>
+<dt>node['application']['name']</dt>
+<dd>Application name.(firest directory of url)</dd>
+<dt>node['application']['auth']['type']</dt>
+<dd>Type of Authentication resource. <code>ldap</code> or <code>db</code>　(db is pgsql)</dd>
+<dt>node['application']['auth']['name'] &nbsp; <span style="color: red;">*required, if auth type is not nil</span></dt>
+<dd>Message on authentication dialog</dd>
+<dt>node['application']['auth']['db']['table'] &nbsp; <span style="color: red;">*required, if auth type is db</span></dt>
+<dd>authentication source table.</dd>
+<dt>node['application']['auth']['db']['id_field'] &nbsp; <span style="color: red;">*required, if auth type is db</span></dt>
+<dd>userid field on table.</dd>
+<dt>node['application']['auth']['db']['id_field'] &nbsp; <span style="color: red;">*required, if auth type is db</span></dt>
+<dd>passowrd field on table.</dd>
+
+</dl>
 
 ```ruby
-default['application']['db']['name'] = 'Database name & db username'
-default['applictaion']['db']['password'] = 'Database user password'
-default['application']['dir'] = 'application directory'
-default['application']['name'] = 'application name used by top level url directory'
-default['application']['auth']['name'] = 'Message on Basic Authentication dialog'
-default['application']['auth']['db']['table'] = 'authentication source table'
-default['application']['auth']['db']['id_field'] = 'userid field on table'
-default['application']['auth']['db']['id_field'] = 'passowrd field on table'
+default['application']['db']['name'] = ''
+default['applictaion']['db']['password'] = ''
+default['application']['base_dir'] = '/vagrant/modules/codeigniter'
+default['application']['public_dir'] = default['application']['base_dir'] + '/public'
+default['application']['name'] = ''
+default['application']['auth']['type'] = false
+default['application']['auth']['name'] = ''
+default['application']['auth']['db']['table'] = 'tb_account'
+default['application']['auth']['db']['id_field'] = 'user_id'
+default['application']['auth']['db']['id_field'] = 'passowrd'
 ```
 
 ## Recipes
-* default
-* init_db
-* deploy
+|name|action|
+|----|----|
+|default|Set up a PHP & httpd modules. |
+|init_db|Create DB, and Create User on PostgreSQL|
+|deploy|Create a config file to httpd directory.|
 
 ## Usage Example
 
@@ -35,9 +61,10 @@ default['application']['auth']['db']['id_field'] = 'passowrd field on table'
           "name" => "wardishdir02",
           "password" => "wardishdir02"
         },
-        "dir" => "/vagrant/apps/codeigniter",
+        "base_dir" => "/vagrant/apps/codeigniter",
         "name" => "wardishdir",
         "auth" => {
+          "type" => "db",
           "name" => "Basic Authentication.",
           "db" => {
             "password_field" => "password",

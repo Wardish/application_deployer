@@ -8,5 +8,6 @@ cookbook 'composer', git: "https://github.com/djoos-cookbooks/composer.git"
 cookbook 'httpd', git: "https://github.com/chef-cookbooks/httpd.git"
 cookbook 'php', git: "https://github.com/chef-cookbooks/php"
 cookbook 'firewalld', git: "https://github.com/rigrassm/firewalld-cookbook.git"
+cookbook 'openldap', git: "https://github.com/Wardish/openldap", branch: "develop"
 
 metadata
