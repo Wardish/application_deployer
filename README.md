@@ -12,12 +12,16 @@ To deploy LL languages applications
 <dl>
 <dt >node['application']['db']['name'] &nbsp; <span style="color: red;">*required for init_db</span></dt>
 <dd>Database name.</dd>
+<dt >node['application']['db']['user'] &nbsp; <span style="color: red;">*required for init_db</span></dt>
+<dd>Database user name.</dd>
 <dt>node['applictaion']['db']['password'] &nbsp; <span style="color: red;">*required for init_db</span></dt>
 <dd>Database user password</dd>
 <dt>node['application']['base_dir']</dt>
 <dd>CodeIgniter directory.</dd>
 <dt>node['application']['public_dir']</dt>
 <dd>DcoumentRoot of application.</dd>
+<dt>node['application']['service_name']</dt>
+<dd>Name of httpd service suffix. (on centos7)</dd>
 <dt>node['application']['name']</dt>
 <dd>Application name.(firest directory of url)</dd>
 <dt>node['application']['auth']['type']</dt>
@@ -35,9 +39,11 @@ To deploy LL languages applications
 
 ```ruby
 default['application']['db']['name'] = ''
+default['application']['db']['user'] = default['application']['db']['name']
 default['applictaion']['db']['password'] = ''
 default['application']['base_dir'] = '/vagrant/modules/codeigniter'
 default['application']['public_dir'] = default['application']['base_dir'] + '/public'
+default['application']['service_name'] = 'default'
 default['application']['name'] = ''
 default['application']['auth']['type'] = false
 default['application']['auth']['name'] = ''
