@@ -1,4 +1,4 @@
-httpd_service 'default' do
+httpd_service node['application']['service_name'] do
   listen_addresses ["*"]
   action [:stop]
 end
@@ -19,7 +19,7 @@ script "initialize database" do
   EOS
 end
 
-httpd_service 'default' do
+httpd_service node['application']['service_name'] do
   listen_addresses ["*"]
   action [:start]
 end
