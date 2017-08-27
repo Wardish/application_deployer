@@ -4,7 +4,7 @@ maintainer_email 'tetsuya@wardish.jp'
 license 'Apache v2.0'
 description 'Installs/Configures application_deployer'
 long_description 'Installs/Configures application_deployer'
-version '2.0.2'
+version '2.0.3'
 chef_version '>= 12.1' if respond_to?(:chef_version)
 
 depends    'postgresql'
