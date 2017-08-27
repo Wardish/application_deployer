@@ -28,7 +28,7 @@ script "Copy php.ini" do
   EOS
 end
 
-httpd_service 'default' do
+httpd_service node['application']['service_name'] do
   listen_addresses ["*"]
   action [:create, :start]
 end
