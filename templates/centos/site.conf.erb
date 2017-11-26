@@ -9,8 +9,11 @@ DBDMax 4
 DBDExptime 60
 <% end %>
 
+<% if node['application']['deployfor'] == "subdir" %>
 Alias /<%= node['application']['name'] %> <%= node['application']['public_dir'] %>
-
+<% else %>
+DocumentRoot <%= node['application']['base_dir'] %>
+<% end %>
 <FilesMatch \.php$>
     SetHandler application/x-httpd-php
 </FilesMatch>

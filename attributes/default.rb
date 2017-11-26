@@ -7,6 +7,7 @@ default['application']['base_dir'] = '/vagrant/modules/codeigniter'
 default['application']['public_dir'] = default['application']['base_dir'] + "/public"
 default['application']['service_name'] = 'default'
 default['application']['name'] = 'sample_app'
+default['application']['deployfor'] = 'subdir'
 default['application']['auth']['require'] = false
 default['application']['auth']['name'] = 'Message on Basic Authentication dialog'
 default['application']['auth']['db']['table'] = 'tb_user'
