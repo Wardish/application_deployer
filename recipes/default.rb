@@ -23,7 +23,7 @@ script "Copy php.ini" do
   user          "root"
   interpreter   "bash"
   code <<-"EOS"
-    cp /etc/php.ini /etc/php-zts.ini
+    sed 's/\/lib64\/php/\/lib64\/php-zts/g' /etc/php.ini > /etc/php-zts.ini
     sed 's/-zts//g' /etc/php-zts.ini > /etc/php.ini
   EOS
 end
