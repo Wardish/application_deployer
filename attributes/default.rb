@@ -13,3 +13,5 @@ default['application']['auth']['name'] = 'Message on Basic Authentication dialog
 default['application']['auth']['db']['table'] = 'tb_user'
 default['application']['auth']['db']['id_field'] = 'user_id'
 default['application']['auth']['db']['id_field'] = 'passowrd'
+
+default['apache']['modules'] = ["dbd", "authn_dbd", "rewrite", "ldap", "authnz_ldap"]
